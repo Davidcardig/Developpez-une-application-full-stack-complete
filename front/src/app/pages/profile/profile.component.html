@@ -1,0 +1,103 @@
+<div class="profile-container">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <div class="header-content">
+        <button mat-icon-button (click)="goBack()" class="back-btn" aria-label="Retour">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div>
+          <mat-card-title>Mon profil</mat-card-title>
+          <mat-card-subtitle>Consultez et modifiez vos informations</mat-card-subtitle>
+        </div>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="loading-container" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="username"
+            placeholder="Votre nom d'utilisateur"
+            autocomplete="username"
+          />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="profileForm.get('username')?.hasError('minlength')">
+            Le nom d'utilisateur doit contenir au moins 3 caractères
+          </mat-error>
+          <mat-error *ngIf="profileForm.get('username')?.hasError('maxlength')">
+            Le nom d'utilisateur ne peut pas dépasser 50 caractères
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="Votre adresse email"
+            autocomplete="email"
+          />
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="profileForm.get('email')?.hasError('email')">
+            Veuillez saisir un email valide
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nouveau mot de passe</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Laisser vide pour ne pas modifier"
+            autocomplete="new-password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Afficher le mot de passe'"
+          >
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="profileForm.get('password')?.hasError('minlength')">
+            Le mot de passe doit contenir au moins 6 caractères
+          </mat-error>
+        </mat-form-field>
+
+        <div class="success-message" *ngIf="successMessage">
+          <mat-icon>check_circle</mat-icon>
+          <span>{{ successMessage }}</span>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          <mat-error>{{ errorMessage }}</mat-error>
+        </div>
+
+        <div class="actions">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="profileForm.invalid || saving"
+            class="full-width"
+          >
+            <span *ngIf="!saving">Enregistrer les modifications</span>
+            <mat-spinner *ngIf="saving" diameter="20"></mat-spinner>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

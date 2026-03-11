@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'front';
+  isLogged$!: Observable<boolean>;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.isLogged$ = this.authService.isLogged$;
+  }
+
+  get isHome(): boolean {
+    return this.router.url === '/';
+  }
 }

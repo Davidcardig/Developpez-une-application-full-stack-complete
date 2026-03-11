@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class NavbarComponent implements OnInit {
   isLogged$!: Observable<boolean>;
 
   constructor(
@@ -20,19 +20,12 @@ export class HomeComponent implements OnInit {
     this.isLogged$ = this.authService.isLogged$;
   }
 
-  goToLogin(): void {
-    this.router.navigate(['/login']);
-  }
-
-  goToRegister(): void {
-    this.router.navigate(['/register']);
-  }
-
   goToProfile(): void {
     this.router.navigate(['/profile']);
   }
 
   logout(): void {
     this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

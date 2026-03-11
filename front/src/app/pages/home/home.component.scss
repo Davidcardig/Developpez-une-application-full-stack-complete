@@ -1,7 +1,72 @@
-.center {
-  height: 100vh;
+.home-container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+}
+
+.center {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 16px;
+
+  max-width: 500px;
+  width: 100%;
+
+  .logo {
+    max-width: 450px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    button {
+      min-width: 160px;
+      height: 48px;
+      font-size: 16px;
+      font-weight: 500;
+      border: #333333 solid 1px;
+      border-radius: 10px;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .logged-in-content {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    button {
+      min-width: 160px;
+      height: 48px;
+      font-size: 16px;
+      font-weight: 500;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
 }

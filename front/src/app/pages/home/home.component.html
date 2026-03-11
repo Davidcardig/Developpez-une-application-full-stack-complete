@@ -1,5 +1,19 @@
-<div class="center">
-  <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+<div class="home-container">
+  <div class="center">
+    <img src="/assets/logo_p6.png" alt="logo" class="logo" />
+
+    <div class="actions" *ngIf="(isLogged$ | async) === false; else loggedIn">
+      <button mat-raised-button (click)="goToLogin()">
+        Se connecter
+      </button>
+      <button mat-raised-button  (click)="goToRegister()">
+        S'inscrire
+      </button>
+    </div>
+
+    <ng-template #loggedIn>
+      <div class="logged-in-content">
+      </div>
+    </ng-template>
+  </div>
 </div>

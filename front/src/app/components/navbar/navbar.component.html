@@ -1,0 +1,19 @@
+<mat-toolbar class="navbar">
+  <!-- Logo à gauche -->
+  <a class="navbar-logo" routerLink="/">
+    <img src="/assets/logo_p6.png" alt="MDD Logo" class="logo" />
+  </a>
+
+  <span class="spacer"></span>
+
+  <!-- Actions à droite (uniquement si connecté) -->
+  <ng-container *ngIf="isLogged$ | async">
+    <button mat-stroked-button class="logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Se déconnecter
+    </button>
+    <button mat-icon-button class="nav-icon-btn" (click)="goToProfile()" matTooltip="Mon profil" aria-label="Mon profil">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>
