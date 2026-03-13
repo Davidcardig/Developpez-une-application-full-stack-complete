@@ -1,0 +1,58 @@
+<div class="themes-container">
+
+
+  <div class="themes-header">
+    <button mat-icon-button (click)="goBack()" aria-label="Retour" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <h1 class="page-title">Thèmes</h1>
+      <p class="page-subtitle">Abonnez-vous aux thèmes qui vous intéressent</p>
+    </div>
+  </div>
+
+
+  <div class="success-banner" *ngIf="successMessage">
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ successMessage }}</span>
+  </div>
+  <div class="error-banner" *ngIf="errorMessage">
+    <mat-icon>error</mat-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div class="themes-grid" *ngIf="!loading">
+    <mat-card class="theme-card" *ngFor="let theme of themes">
+      <mat-card-header>
+        <mat-card-title>{{ theme.title }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="theme-description">{{ theme.description }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          [color]="theme.subscribed ? undefined : 'primary'"
+          [disabled]="theme.subscribed"
+          (click)="subscribe(theme)"
+        >
+          <mat-icon *ngIf="theme.subscribed">check_circle</mat-icon>
+          {{ theme.subscribed ? 'Déjà abonné' : "S'abonner" }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <p class="empty-message" *ngIf="themes.length === 0">
+      Aucun thème disponible pour le moment.
+    </p>
+  </div>
+
+</div>
+
