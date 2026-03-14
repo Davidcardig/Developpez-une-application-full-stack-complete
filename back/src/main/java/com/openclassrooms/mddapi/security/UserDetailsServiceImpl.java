@@ -29,16 +29,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 new ArrayList<>()
         );
     }
-
-    public UserDetails loadUserById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                new ArrayList<>()
-        );
-    }
 }
 

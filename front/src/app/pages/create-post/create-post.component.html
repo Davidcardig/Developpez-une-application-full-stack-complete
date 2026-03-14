@@ -1,0 +1,67 @@
+<div class="page-container">
+  <mat-card class="form-card">
+
+    <mat-card-header>
+      <div class="header-row">
+        <button mat-icon-button (click)="goBack()" aria-label="Retour">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-card-title>Créer un article</mat-card-title>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="loading-container" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <form [formGroup]="postForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+
+        <!-- Thème -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Thème</mat-label>
+          <mat-select formControlName="themeId">
+            <mat-option *ngFor="let theme of subscribedThemes" [value]="theme.id">
+              {{ theme.title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="postForm.get('themeId')?.hasError('required')">
+            Veuillez sélectionner un thème
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Titre -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Titre</mat-label>
+          <input matInput formControlName="title" placeholder="Titre de l'article" maxlength="200" />
+          <mat-hint align="end">{{ postForm.get('title')?.value?.length || 0 }}/200</mat-hint>
+          <mat-error *ngIf="postForm.get('title')?.hasError('required')">Le titre est requis</mat-error>
+          <mat-error *ngIf="postForm.get('title')?.hasError('maxlength')">200 caractères maximum</mat-error>
+        </mat-form-field>
+
+        <!-- Contenu -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contenu</mat-label>
+          <textarea matInput formControlName="content" placeholder="Rédigez votre article…"
+            rows="10" cdkTextareaAutosize cdkAutosizeMinRows="8"></textarea>
+          <mat-error *ngIf="postForm.get('content')?.hasError('required')">Le contenu est requis</mat-error>
+        </mat-form-field>
+
+        <div class="error-message" *ngIf="errorMessage">
+          <mat-icon>error</mat-icon> {{ errorMessage }}
+        </div>
+
+        <button mat-raised-button color="primary" type="submit"
+          [disabled]="postForm.invalid || submitting || subscribedThemes.length === 0"
+          class="full-width submit-btn">
+          <mat-spinner diameter="20" *ngIf="submitting"></mat-spinner>
+          <span *ngIf="!submitting">Publier</span>
+        </button>
+
+      </form>
+    </mat-card-content>
+
+  </mat-card>
+</div>
+

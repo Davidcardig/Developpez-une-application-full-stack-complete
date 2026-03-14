@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.config;
 
-import com.openclassrooms.mddapi.security.JwtAuthenticationEntryPoint;
 import com.openclassrooms.mddapi.security.JwtAuthenticationFilter;
 import com.openclassrooms.mddapi.security.JwtTokenProvider;
 import com.openclassrooms.mddapi.security.UserDetailsServiceImpl;
@@ -31,7 +30,6 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
@@ -62,7 +60,6 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
