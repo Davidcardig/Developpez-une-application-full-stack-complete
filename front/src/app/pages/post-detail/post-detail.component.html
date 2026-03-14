@@ -1,0 +1,82 @@
+<div class="page-container">
+
+  <!-- Chargement -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- Erreur -->
+  <div class="error-state" *ngIf="!loading && errorMessage">
+    <p>{{ errorMessage }}</p>
+    <button mat-raised-button (click)="goBack()">Retour</button>
+  </div>
+
+  <!-- Contenu -->
+  <div class="post-layout" *ngIf="!loading && post">
+
+    <!-- Article -->
+    <mat-card class="post-card">
+      <mat-card-header>
+        <div class="post-header">
+          <button mat-icon-button (click)="goBack()" aria-label="Retour">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <div class="post-header-info">
+            <span class="theme-chip">{{ post.themeTitle }}</span>
+            <mat-card-title class="post-title">{{ post.title }}</mat-card-title>
+            <div class="post-meta">
+              <span><mat-icon class="meta-icon">person</mat-icon>{{ post.authorUsername }}</span>
+              <span><mat-icon class="meta-icon">schedule</mat-icon>{{ post.createdAt | date:'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="post-content">{{ post.content }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Commentaires -->
+    <div class="comments-section">
+      <h2 class="comments-title">Commentaires ({{ post.comments.length }})</h2>
+
+      <!-- Liste des commentaires -->
+      <div class="comments-list" *ngIf="post.comments.length > 0">
+        <div class="comment-item" *ngFor="let comment of post.comments">
+          <div class="comment-author">
+            <mat-icon class="comment-icon">account_circle</mat-icon>
+            <strong>{{ comment.authorUsername }}</strong>
+            <span class="comment-date">{{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <p class="comment-content">{{ comment.content }}</p>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+      <p class="no-comment" *ngIf="post.comments.length === 0">
+        Soyez le premier à commenter cet article !
+      </p>
+
+      <!-- Formulaire commentaire -->
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Ajouter un commentaire</mat-label>
+          <textarea matInput formControlName="content" placeholder="Votre commentaire…"
+            rows="3" cdkTextareaAutosize cdkAutosizeMinRows="3"></textarea>
+          <mat-error *ngIf="commentForm.get('content')?.hasError('required')">
+            Le commentaire ne peut pas être vide
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"
+          [disabled]="commentForm.invalid || submittingComment">
+          <mat-spinner diameter="18" *ngIf="submittingComment"></mat-spinner>
+          <span *ngIf="!submittingComment">Envoyer</span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
