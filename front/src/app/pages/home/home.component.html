@@ -1,19 +1,60 @@
-<div class="home-container">
-  <div class="center">
+<div class="home-container" [class.feed-mode]="(isLogged$ | async)">
+
+  <!-- ===== PAGE D'ACCUEIL (non connecté) ===== -->
+  <div class="center" *ngIf="(isLogged$ | async) === false; else feedTemplate">
     <img src="/assets/logo_p6.png" alt="logo" class="logo" />
-
-    <div class="actions" *ngIf="(isLogged$ | async) === false; else loggedIn">
-      <button mat-raised-button (click)="goToLogin()">
-        Se connecter
-      </button>
-      <button mat-raised-button  (click)="goToRegister()">
-        S'inscrire
-      </button>
+    <div class="actions">
+      <button mat-raised-button (click)="goToLogin()">Se connecter</button>
+      <button mat-raised-button (click)="goToRegister()">S'inscrire</button>
     </div>
-
-    <ng-template #loggedIn>
-      <div class="logged-in-content">
-      </div>
-    </ng-template>
   </div>
+
+  <!-- ===== FIL D'ACTUALITÉ (connecté) ===== -->
+  <ng-template #feedTemplate>
+    <div class="feed-wrapper">
+
+      <div class="feed-header">
+        <h1 class="feed-title">Articles</h1>
+        <button mat-icon-button (click)="toggleSort()" class="sort-btn"
+          [matTooltip]="sortDesc ? 'Afficher du plus ancien au plus récent' : 'Afficher du plus récent au plus ancien'">
+          <mat-icon>{{ sortDesc ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+        </button>
+      </div>
+
+      <div class="loading-container" *ngIf="loading">
+        <mat-spinner diameter="48"></mat-spinner>
+      </div>
+
+      <!-- Articles -->
+      <div class="posts-grid" *ngIf="!loading && displayedPosts.length > 0">
+        <mat-card class="post-card" *ngFor="let post of displayedPosts" (click)="goToPost(post.id)">
+          <mat-card-header>
+            <span class="theme-chip">{{ post.themeTitle }}</span>
+            <mat-card-title class="post-title">{{ post.title }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="post-excerpt">{{ post.content | slice:0:150 }}{{ post.content.length > 150 ? '…' : '' }}</p>
+          </mat-card-content>
+          <mat-card-footer class="post-footer">
+            <span class="post-meta">
+              <mat-icon class="meta-icon">person</mat-icon>{{ post.authorUsername }}
+            </span>
+            <span class="post-meta">
+              <mat-icon class="meta-icon">schedule</mat-icon>{{ post.createdAt | date:'dd/MM/yyyy' }}
+            </span>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+
+      <!-- Aucun abonnement / aucun article -->
+      <div class="empty-state" *ngIf="!loading && displayedPosts.length === 0">
+        <mat-icon class="empty-icon">article</mat-icon>
+        <p>Aucun article à afficher.</p>
+        <p class="empty-hint">Abonnez-vous à des thèmes pour voir leurs articles ici.</p>
+        <button mat-raised-button color="primary" routerLink="/themes">Voir les thèmes</button>
+      </div>
+
+    </div>
+  </ng-template>
+
 </div>

@@ -70,8 +70,8 @@
           >
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
-          <mat-error *ngIf="profileForm.get('password')?.hasError('minlength')">
-            Le mot de passe doit contenir au moins 6 caractères
+          <mat-error *ngIf="profileForm.get('password')?.hasError('pattern')">
+            8 caractères min. avec majuscule, minuscule, chiffre et caractère spécial
           </mat-error>
         </mat-form-field>
 
@@ -98,6 +98,36 @@
         </div>
       </form>
     </mat-card-content>
+
+    <!-- Section : Mes abonnements -->
+    <mat-card-content class="subscriptions-section">
+      <h3 class="subscriptions-title">Mes abonnements</h3>
+
+      <div *ngIf="subscribedThemes.length === 0" class="no-subscriptions">
+        <p>Vous n'êtes abonné à aucun thème pour le moment.</p>
+        <button mat-stroked-button color="primary" routerLink="/themes">Découvrir les thèmes</button>
+      </div>
+
+      <div class="subscriptions-list" *ngIf="subscribedThemes.length > 0">
+        <mat-card class="subscription-item" *ngFor="let theme of subscribedThemes">
+          <div class="subscription-content">
+            <div class="subscription-info">
+              <span class="subscription-title">{{ theme.title }}</span>
+              <span class="subscription-description">{{ theme.description }}</span>
+            </div>
+            <button
+              mat-stroked-button
+              color="warn"
+              (click)="unsubscribe(theme)"
+              class="unsubscribe-btn"
+            >
+              Se désabonner
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    </mat-card-content>
+
   </mat-card>
 </div>
 

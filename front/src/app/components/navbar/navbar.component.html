@@ -8,9 +8,17 @@
 
   <!-- Actions à droite (uniquement si connecté) -->
   <ng-container *ngIf="isLogged$ | async">
+    <button mat-stroked-button class="nav-link-btn" routerLink="/themes" matTooltip="Voir les thèmes">
+      <mat-icon>explore</mat-icon>
+      <span class="btn-label">Thèmes</span>
+    </button>
+    <button mat-stroked-button class="nav-link-btn" routerLink="/posts/create" matTooltip="Créer un article">
+      <mat-icon>edit</mat-icon>
+      <span class="btn-label">Créer un article</span>
+    </button>
     <button mat-stroked-button class="logout-btn" (click)="logout()">
       <mat-icon>logout</mat-icon>
-      Se déconnecter
+      <span class="btn-label">Se déconnecter</span>
     </button>
     <button mat-icon-button class="nav-icon-btn" (click)="goToProfile()" matTooltip="Mon profil" aria-label="Mon profil">
       <mat-icon>account_circle</mat-icon>

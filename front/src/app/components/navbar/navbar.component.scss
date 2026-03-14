@@ -53,3 +53,23 @@
   }
 }
 
+.nav-link-btn {
+  color: #333;
+  font-weight: 500;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
+}
+
+/* Masquer les textes sur petits écrans */
+@media (max-width: 599px) {
+  .btn-label { display: none; }
+  .nav-link-btn, .logout-btn { min-width: 0; padding: 0 8px; }
+}

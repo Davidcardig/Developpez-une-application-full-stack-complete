@@ -106,3 +106,69 @@ mat-card-actions {
   }
 }
 
+.subscriptions-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 20px;
+  margin-top: 8px;
+}
+
+.subscriptions-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.no-subscriptions {
+  text-align: center;
+  padding: 16px 0 8px;
+  color: rgba(0, 0, 0, 0.6);
+
+  p {
+    margin-bottom: 12px;
+  }
+}
+
+.subscriptions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subscription-item {
+  padding: 0;
+
+  .subscription-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 16px;
+  }
+
+  .subscription-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .subscription-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .subscription-description {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .unsubscribe-btn {
+    flex-shrink: 0;
+    font-size: 13px;
+  }
+}
